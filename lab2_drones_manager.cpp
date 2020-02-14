@@ -254,6 +254,23 @@ bool DronesManager::replace(unsigned int index, DroneRecord value) {
 
 // reverses the list
 bool DronesManager::reverse_list() {
-	return false;
+	DroneRecord* current = first;
+	DroneRecord *prev = NULL, *next = NULL;
+	bool success = true;
+	
+	while(current != NULL)
+	{
+		next = current->next;
+		
+		current->next = prev;
+		
+		prev=current;
+		current=next;
+		success = true;
+	}
+	first = prev;
+	
+	return success;
 }
+
 
