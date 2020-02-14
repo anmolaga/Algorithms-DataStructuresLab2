@@ -40,6 +40,11 @@ bool DronesManager::empty() const {
 		return false;
 }
 
+
+
+
+	// PURPOSE: Returns the value at the given index in the list
+	// if index is invalid, returns last element; if the list is empty, returns DroneRecord(0)
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	int length = get_size();
 	if (index < 0 || index > length)
@@ -60,6 +65,9 @@ DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 		return *end;
 	}
 }
+
+
+
 
 // PURPOSE: Searches for the given value, and returns the index of this value if found	
 // if not found, returns the size of the list; if the list is empty, returns 0
@@ -85,6 +93,9 @@ unsigned int DronesManager::search(DroneRecord value) const {
 	return get_size();
 }
 
+
+
+
 // PURPOSE: Prints all the elements in the list to the console
 
 //HOW TO PRINT?---------------------------------------------------------------------
@@ -108,46 +119,118 @@ void DronesManager::print() const {
 	}
 }
 
+
 	// MUTATORS
 	// PURPOSE: Inserts a value into the list at a given index; the list is not sorted
 	// if the index is invalid, insertion is rejected
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
 	int size = get_size();
-	DroneRecord* p = first;
-	DroneRecord newPrev = select(index-1);
-	DroneRecord newNext = select(index);
-	DroneRecord* newPrevPtr = &newPrev;
-	DroneRecord* newNextPtr = &newNext;
-	
+	if (size < 0 || index > size)
+	{
+		return false;
+	} else {
+		DroneRecord* prevNode = first;
+		for (int i = 0; i < (index-1); i++)
+		{
+			prevNode = prevNode -> next;
+		}
+		
+		// assign the next of the new inserted node to the nextNode in the list
+		value.next = prevNode->next;
+		
+		// the previous of the new node needs to point to the previous node
+		value.prev = prevNode;
+		
+		// the next of the previous Node should point to the adress of the new node
+		prevNode->next = &value;
+		
+		(value.next)->prev = &value;
+		
+		return true;
+	}	
 
 }
+
+
+
 
 // PURPOSE: Inserts a value at the beginning of the list; the list is not sorted
 bool DronesManager::insert_front(DroneRecord value) {
-	DroneRecord* p = first;
-	*p = value;
-	return false;
+	if(!first) {
+	
+		first = &value;
+		return true;
+}
+	else {
+		first->prev = &value;
+		value.next = first;
+		first = &value;
+		return true;
+	}
+	
 }
 
+
+
+// PURPOSE: Inserts a value at the end of the list; the list is not sorted
+
 bool DronesManager::insert_back(DroneRecord value) {
-	DroneRecord* p = last;
-	*p = value;
-	return false;
+	if(!last) {
+		first = &value;
+		return true;
+}
+	else {
+		last->next = &value;
+		value.prev = last;
+		last = &value;
+	}
+	return true;
 }
 
 // PURPOSE: Deletes a value from the list at the given index
 bool DronesManager::remove(unsigned int index) {
-	
-	return false;
+	int size = get_size();
+	if (size < 0 || index > size)
+	{
+		return false;
+	} else {
+		DroneRecord* prevNode = first;
+		for (int i = 0; i < (index-1); i++)
+		{
+			prevNode = prevNode -> next;
+		}
+		
+		// assign the next of the new inserted node to the nextNode in the list
+		value.next = prevNode->next;
+		
+		// the previous of the new node needs to point to the previous node
+		value.prev = prevNode;
+		
+		// the next of the previous Node should point to the adress of the new node
+		prevNode->next = &value;
+		
+		(value.next)->prev = &value;
+		
+		return true;
+	}	
+
 }
 
+
+// PURPOSE: Deletes a value from the beginning of the list
 bool DronesManager::remove_front() {
 	return false;
+	
+	
 }
-
+// PURPOSE: Deletes a value at the end of the list
 bool DronesManager::remove_back() {
 	return false;
 }
+
+
+// PURPOSE: Replaces value at the given index with the given value; the list is not sorted	
+// if the index is invalid, replacement is rejected
 
 bool DronesManager::replace(unsigned int index, DroneRecord value) {
 	int size = get_size();
@@ -165,6 +248,9 @@ bool DronesManager::replace(unsigned int index, DroneRecord value) {
 		p = p -> next;
 	}
 }
+
+
+
 
 // reverses the list
 bool DronesManager::reverse_list() {
