@@ -70,7 +70,7 @@ unsigned int DronesManager::search(DroneRecord value) const {
 	{
 		return 0;
 	}
-	else
+	else 
 	{
 		while(check != NULL)
 		{
@@ -81,9 +81,8 @@ unsigned int DronesManager::search(DroneRecord value) const {
 			check = check -> next;
 			counter++;
 		}
-		return counter;
 	}
-	return 0;
+	return get_size();
 }
 
 // PURPOSE: Prints all the elements in the list to the console
@@ -109,26 +108,18 @@ void DronesManager::print() const {
 	}
 }
 
-// MUTATORSInserts a value into the list at a given index; the list is not sorted
-// PURPOSE: 
-// if the index is invalid, insertion is rejected
+	// MUTATORS
+	// PURPOSE: Inserts a value into the list at a given index; the list is not sorted
+	// if the index is invalid, insertion is rejected
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
 	int size = get_size();
 	DroneRecord* p = first;
-//	DroneRecord* p2 = value; //**
+	DroneRecord newPrev = select(index-1);
+	DroneRecord newNext = select(index);
+	DroneRecord* newPrevPtr = &newPrev;
+	DroneRecord* newNextPtr = &newNext;
 	
-	if (index > size || index < 0)
-		return false;
-		
-	for (int i = 0; i < size; i++)
-	{
-		if (index == i)
-		{
-		//	*p2 = p -> next; //**
-			*p = value;
-		}
-		p = p -> next;
-	}
+
 }
 
 // PURPOSE: Inserts a value at the beginning of the list; the list is not sorted
