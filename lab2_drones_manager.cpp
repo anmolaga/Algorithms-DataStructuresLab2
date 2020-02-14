@@ -103,6 +103,9 @@ void DronesManager::print() const {
 	for (int i = 0; i < length; i++)
 	{
 		cout << print[i].droneType << endl;
+		cout << print[i].manufacturer << endl;
+		cout << print[i].description << endl;
+		cout << print[i].batteryType << endl;
 	}
 }
 
