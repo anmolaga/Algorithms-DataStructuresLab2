@@ -37,12 +37,25 @@ public:
 	
 	// PURPOSE: select() and search() work properly
 	bool test3() {
-	    return false;
+		// select
+		DronesManager manager1;
+		DronesManager::DroneRecord record1(100);
+		manager1.insert_front(record1);
+		ASSERT_TRUE(manager1.select(0) == record1);
+		//search
+		ASSERT_TRUE(manager1.search(record1)==0);
+	    return true;
 	}
 	
 	// PURPOSE: remove_front() and remove_back() on one-element list
 	bool test4() {
-	    return false;
+		DronesManager manager1;
+		DronesManager::DroneRecord record1(100);
+		manager1.insert_front(record1);
+		manager1.remove_front();
+		
+		return true;
+		
 	}
 	
 	// PURPOSE: replace() and reverse_list() work properly
@@ -71,34 +84,8 @@ public:
 	}    
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
-	bool test10(DronesManager::DroneRecord) {
-		
-	DronesManager::DroneRecord* current = first;
-	DronesManager::DroneRecord *prev = NULL, *next = NULL;
-	bool success = true;
-	
-	while(current != NULL)
-	{
-		next = current->next;
-		
-		current->next = prev;
-		
-		prev=current;
-		current=next;
-		success = true;
-	}
-	first = prev;
-			
-
-	for (int i = 0; i < DronesManager.size; i++)
-	{
-		delete DronesManager[i];
-	}
-	
-	ASSERT_TRUE(DronesManager.size == 0);
-
-		
-	return success;
+	bool test10() {
+	   return false;
 	} 
 };
 

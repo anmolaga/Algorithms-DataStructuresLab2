@@ -1,6 +1,8 @@
 #include "lab2_drones_manager.hpp"
 #include <iostream>
-
+#include <cstdlib>
+#include <fstream>
+#include <cmath>
 // TODO: Implement all of the listed functions below
 
 DronesManager::DronesManager() {
@@ -10,10 +12,14 @@ DronesManager::DronesManager() {
 }
 
 DronesManager::~DronesManager() {
-	delete[] first;
-	first = NULL;
-	delete[] last;
-	last = NULL;
+		DroneRecord* current = first;
+	while(current) {
+		current = current->next;
+		delete first;
+		first = current;
+	}
+	first = last = NULL;
+	size = 0;
 }
 
 bool operator==(const DronesManager::DroneRecord& lhs, const DronesManager::DroneRecord& rhs) {
@@ -40,11 +46,6 @@ bool DronesManager::empty() const {
 		return false;
 }
 
-
-
-
-	// PURPOSE: Returns the value at the given index in the list
-	// if index is invalid, returns last element; if the list is empty, returns DroneRecord(0)
 DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	int length = get_size();
 	if (index < 0 || index > length)
@@ -66,11 +67,6 @@ DronesManager::DroneRecord DronesManager::select(unsigned int index) const {
 	}
 }
 
-
-
-
-// PURPOSE: Searches for the given value, and returns the index of this value if found	
-// if not found, returns the size of the list; if the list is empty, returns 0
 unsigned int DronesManager::search(DroneRecord value) const {
 	DroneRecord* check = first;
 	int counter = 0;
@@ -93,12 +89,6 @@ unsigned int DronesManager::search(DroneRecord value) const {
 	return get_size();
 }
 
-
-
-
-// PURPOSE: Prints all the elements in the list to the console
-
-//HOW TO PRINT?---------------------------------------------------------------------
 void DronesManager::print() const {
 	int length = get_size();
 	DroneRecord print[length];
@@ -119,10 +109,6 @@ void DronesManager::print() const {
 	}
 }
 
-
-	// MUTATORS
-	// PURPOSE: Inserts a value into the list at a given index; the list is not sorted
-	// if the index is invalid, insertion is rejected
 bool DronesManager::insert(DroneRecord value, unsigned int index) {
 	int size = get_size();
 	if (size < 0 || index > size)
@@ -151,10 +137,6 @@ bool DronesManager::insert(DroneRecord value, unsigned int index) {
 
 }
 
-
-
-
-// PURPOSE: Inserts a value at the beginning of the list; the list is not sorted
 bool DronesManager::insert_front(DroneRecord value) {
 	if(!first) {
 		first = &value;
@@ -170,10 +152,6 @@ bool DronesManager::insert_front(DroneRecord value) {
 	}
 	
 }
-
-
-
-// PURPOSE: Inserts a value at the end of the list; the list is not sorted
 
 bool DronesManager::insert_back(DroneRecord value) {
 	if(!last) {
@@ -191,7 +169,6 @@ bool DronesManager::insert_back(DroneRecord value) {
 	return true;
 }
 
-// PURPOSE: Deletes a value from the list at the given index
 bool DronesManager::remove(unsigned int index) {
 	int size = get_size();
 	if (size < 0 || index > size)
@@ -216,9 +193,7 @@ bool DronesManager::remove(unsigned int index) {
 }
 }
 
-
-// PURPOSE: Deletes a value from the beginning of the list
-bool DronesManager::remove_front() {	
+bool DronesManager::remove_front() {
 	if(!first) {
 		return false;
 }
@@ -238,7 +213,7 @@ bool DronesManager::remove_front() {
 	}
 
 }
-// PURPOSE: Deletes a value at the end of the list
+
 bool DronesManager::remove_back() {
 	if(!last) {
 		return false;
@@ -260,10 +235,6 @@ bool DronesManager::remove_back() {
 	}
 }
 
-
-// PURPOSE: Replaces value at the given index with the given value; the list is not sorted	
-// if the index is invalid, replacement is rejected
-
 bool DronesManager::replace(unsigned int index, DroneRecord value) {
 	int size = get_size();
 	DroneRecord* p = first;
@@ -281,10 +252,6 @@ bool DronesManager::replace(unsigned int index, DroneRecord value) {
 	}
 }
 
-
-
-
-// reverses the list
 bool DronesManager::reverse_list() {
 	DroneRecord* current = first;
 	DroneRecord *prev = NULL, *next = NULL;
@@ -304,5 +271,4 @@ bool DronesManager::reverse_list() {
 	
 	return success;
 }
-
 
