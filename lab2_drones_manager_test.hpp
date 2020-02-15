@@ -140,7 +140,35 @@ public:
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
 	bool test10() {
-	   return false;
+	DronesManager manager2;
+		
+	//add elements
+	for(int i = 0; i < 10; i++)
+	{
+		record1[i] = 5;
+		record2[i] = 7;
+	}
+	ASSERT_TRUE(record1.size == record2.size == 9);
+		
+	//reverse list
+	DronesManager::DroneRecord record1(100);
+	DronesManager::DroneRecord recorde2(100);
+	manager2.insert_front(record1);
+	manager2.insert_back(record2);
+	manager2.reverse_list();
+	ASSERT_TRUE(manager2.select(0)==record2);
+	ASSERT_TRUE(manager2.select(1)==record1);
+		
+	//remove until empty
+	for (int i = 0; i < record1.size; i++)
+	{
+		delete record[i];
+	}
+
+	ASSERT_TRUE(record.size == 0);
+
+
+	return success;
 	} 
 };
 
