@@ -95,12 +95,52 @@ public:
 	
 	// PURPOSE: insert_front() keeps moving elements forward
 	bool test6() {
-	    return false;
+		
+		DronesManager inTest;
+		
+		DronesManager::DroneRecord nDrone1(100);
+		DronesManager::DroneRecord nDrone2(200);
+		DronesManager::DroneRecord nDrone3(300);
+		DronesManager::DroneRecord nDrone4(400);
+		
+		bool success = true;
+		
+		inTest.insert_front(nDrone1);
+		inTest.insert_front(nDrone2);
+		inTest.insert_front(nDrone3);
+		inTest.insert_front(nDrone4);
+		
+		success = success && (inTest.select(0)==nDrone4);
+	    	success = success && (inTest.select(1)==nDrone3);
+	    	success = success && (inTest.select(2)==nDrone2);
+	  	success = success && (inTest.select(3)==nDrone1);
+	    
+		return success;
 	}
 	
 	// PURPOSE: inserting at different positions in the list
 	bool test7() {
-	    return false;
+		
+		DronesManager inTest;
+		
+		DronesManager::DroneRecord nDrone1(100);
+		DronesManager::DroneRecord nDrone2(200);
+		DronesManager::DroneRecord nDrone3(300);
+		DronesManager::DroneRecord nDrone4(400);
+		
+		bool success = true;
+		
+		inTest.insert(nDrone1,3);
+		inTest.insert(nDrone2,4);
+		inTest.insert(nDrone3,6);
+		inTest.insert(nDrone4,7);
+		
+		success = success && (inTest.select(7) == nDrone4);
+		success = success && (inTest.select(6) == nDrone3);
+		success = success && (inTest.select(4) == nDrone2);
+		success = success && (inTest.select(3) == nDrone1);
+		
+	   	return success;
 	}
 	
 	// PURPOSE: try to remove too many elements, then add a few elements
