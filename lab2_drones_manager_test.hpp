@@ -49,18 +49,48 @@ public:
 	
 	// PURPOSE: remove_front() and remove_back() on one-element list
 	bool test4() {
+		// remove front
 		DronesManager manager1;
 		DronesManager::DroneRecord record1(100);
 		manager1.insert_front(record1);
 		manager1.remove_front();
+		ASSERT_TRUE(manager1.get_size()==0);
 		
+		// remove back
+		DronesManager manager2;
+		DronesManager::DroneRecord record2(101);
+		manager2.insert_back(record2);
+		manager2.remove_back();
+		ASSERT_TRUE(manager1.get_size()==0);
 		return true;
 		
 	}
 	
 	// PURPOSE: replace() and reverse_list() work properly
 	bool test5() {
-	    return false;
+		
+		// -------------REPLACE-----------------
+		DronesManager manager1;
+		DronesManager::DroneRecord record1(100);
+		DronesManager::DroneRecord record2(101);
+		manager1.insert_front(record1);
+		
+		// replacement should get rejected if index is false
+		ASSERT_FALSE(manager1.replace(1, record2));
+		
+		manager1.replace(0, record2);
+		ASSERT_TRUE(manager1.select(0)==record2);
+	    
+	    
+	    // -------------REVERSE LIST-----------------
+	    DronesManager manager2;
+	    manager2.insert_front(record1);
+	    manager2.insert_back(record2);
+	    manager2.reverse_list();
+	    ASSERT_TRUE(manager2.select(0)==record2);
+	    ASSERT_TRUE(manager2.select(1)==record1);
+	    
+	    return true;
 	}
 	
 	// PURPOSE: insert_front() keeps moving elements forward
