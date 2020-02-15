@@ -105,7 +105,32 @@ public:
 	
 	// PURPOSE: try to remove too many elements, then add a few elements
 	bool test8() {
-	    return false;
+	
+	bool success = true;
+	DronesManager manager;
+	DronesManager::DroneRecord record(100);
+	//removing an excess amount of elements
+	for (int i = 0; i < record.size + 5; i++)
+	{
+		delete record[i];
+		success = true;
+	}
+	//checking to see if removal occured
+	ASSERT_TRUE(record.size == 0);
+	//adding elements
+	DronesManager:: DroneRecord record1(100);
+	record = record1;
+	for(int i = 0; i < record1.size(); i++)
+	{
+		if (record[i] == record1[i])
+		{
+			success = true;
+		}
+
+	}
+	//checking to see if elements were added
+	ASSERT_TRUE(success);
+	return success;
 	}
 	
 	// PURPOSE: lots of inserts and deletes, some of them invalid
