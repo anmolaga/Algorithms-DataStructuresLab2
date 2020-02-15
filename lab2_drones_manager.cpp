@@ -145,7 +145,7 @@ bool DronesManager::insert(DroneRecord value, unsigned int index) {
 		prevNode->next = &value;
 		
 		(value.next)->prev = &value;
-		
+		size++;
 		return true;
 	}	
 
@@ -157,14 +157,15 @@ bool DronesManager::insert(DroneRecord value, unsigned int index) {
 // PURPOSE: Inserts a value at the beginning of the list; the list is not sorted
 bool DronesManager::insert_front(DroneRecord value) {
 	if(!first) {
-	
 		first = &value;
+		size++;
 		return true;
 }
 	else {
 		first->prev = &value;
 		value.next = first;
 		first = &value;
+		size++;
 		return true;
 	}
 	
@@ -177,12 +178,15 @@ bool DronesManager::insert_front(DroneRecord value) {
 bool DronesManager::insert_back(DroneRecord value) {
 	if(!last) {
 		first = &value;
+		last = &value;
+		size++;
 		return true;
 }
 	else {
 		last->next = &value;
 		value.prev = last;
 		last = &value;
+		size++;
 	}
 	return true;
 }
@@ -202,39 +206,58 @@ bool DronesManager::remove(unsigned int index) {
 		
 		DroneRecord* temp = (prevNode->next);
 		
-		// taking care of removing the value at that index
 		prevNode->next = prevNode->next->next;
 		(prevNode->next)->prev->prev = (prevNode->next)->prev;
 		
-		
-		// making sure that the pointers of the deleted node are freed up 
-		delete[] temp->prev;
-		temp->prev = NULL;
-		delete[] temp->next;
-		temp->next = NULL;
+		delete[] temp;
+		temp = NULL;
+		size--;
 		return true;
-	}	
-
+}
 }
 
 
 // PURPOSE: Deletes a value from the beginning of the list
 bool DronesManager::remove_front() {	
 	if(!first) {
-	
-		first = &value;
-		return true;
+		return false;
 }
-	else {
-		first->prev = &value;
-		value.next = first;
-		first = &value;
+	else if(get_size()==1){
+		delete[] first;
+		first = NULL;
+		size--;
+		return true;
+	} else {
+		DroneRecord* temp = first->next;
+		delete[] first;
+		first = NULL;
+		first = temp;
+		first->prev = NULL;
+		size--;
 		return true;
 	}
+
 }
 // PURPOSE: Deletes a value at the end of the list
 bool DronesManager::remove_back() {
-	return false;
+	if(!last) {
+		return false;
+}
+	else if(get_size()==1){
+		delete[] last;
+		last = NULL;
+		size--;
+		return true;
+	} else {
+		DroneRecord* temp = last->prev;
+		delete[] last;
+		last = NULL;
+		last = temp;
+		last->next = NULL;
+		
+		size--;
+		return true;
+	}
 }
 
 
