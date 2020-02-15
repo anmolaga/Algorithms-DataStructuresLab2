@@ -135,7 +135,31 @@ public:
 	
 	// PURPOSE: lots of inserts and deletes, some of them invalid
 	bool test9() {
-		return false;
+	
+	bool success = true;
+	DronesManager manager;
+	DronesManager::DroneRecord record1(100);
+	DronesManager::DroneRecord record2(100);
+	manager.insert_front(record1);
+	manager.insert_back(record2);
+	
+	//checks for inserts
+	ASSERT_TRUE(manager.size != NULL);
+		
+	for(int i = 0; i < record1.size(); i++)
+	{
+		//deleting elements with check for invalid
+		if(record[i] != NULL)
+			delete record1[i]
+			
+		success = true;
+	}
+	
+	
+	//check to see if elements were deleted
+	ASSERT_TRUE(record1 == NULL);
+
+	return success;
 	}    
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
