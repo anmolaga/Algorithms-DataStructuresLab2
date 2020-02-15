@@ -194,23 +194,24 @@ bool DronesManager::remove(unsigned int index) {
 	{
 		return false;
 	} else {
-		DroneRecord* prevNode = first;
-		for (int i = 0; i < (index-1); i++)
+		DroneRecord* prevNode = first; 
+		for(int i =0; i< (index-1); i++)
 		{
 			prevNode = prevNode -> next;
 		}
 		
-		// assign the next of the new inserted node to the nextNode in the list
-		value.next = prevNode->next;
+		DroneRecord* temp = (prevNode->next);
 		
-		// the previous of the new node needs to point to the previous node
-		value.prev = prevNode;
+		// taking care of removing the value at that index
+		prevNode->next = prevNode->next->next;
+		(prevNode->next)->prev->prev = (prevNode->next)->prev;
 		
-		// the next of the previous Node should point to the adress of the new node
-		prevNode->next = &value;
 		
-		(value.next)->prev = &value;
-		
+		// making sure that the pointers of the deleted node are freed up 
+		delete[] temp->prev;
+		temp->prev = NULL;
+		delete[] temp->next;
+		temp->next = NULL;
 		return true;
 	}	
 
@@ -218,10 +219,18 @@ bool DronesManager::remove(unsigned int index) {
 
 
 // PURPOSE: Deletes a value from the beginning of the list
-bool DronesManager::remove_front() {
-	return false;
+bool DronesManager::remove_front() {	
+	if(!first) {
 	
-	
+		first = &value;
+		return true;
+}
+	else {
+		first->prev = &value;
+		value.next = first;
+		first = &value;
+		return true;
+	}
 }
 // PURPOSE: Deletes a value at the end of the list
 bool DronesManager::remove_back() {
