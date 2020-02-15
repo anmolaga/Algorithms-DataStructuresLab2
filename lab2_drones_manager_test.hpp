@@ -71,8 +71,34 @@ public:
 	}    
 	    	
 	// PURPOSE: lots of inserts, reverse the list, and then lots of removes until empty
-	bool test10() {
-	   return false;
+	bool test10(DronesManager::DroneRecord) {
+		
+	DronesManager::DroneRecord* current = first;
+	DronesManager::DroneRecord *prev = NULL, *next = NULL;
+	bool success = true;
+	
+	while(current != NULL)
+	{
+		next = current->next;
+		
+		current->next = prev;
+		
+		prev=current;
+		current=next;
+		success = true;
+	}
+	first = prev;
+			
+
+	for (int i = 0; i < DronesManager.size; i++)
+	{
+		delete DronesManager[i];
+	}
+	
+	ASSERT_TRUE(DronesManager.size == 0);
+
+		
+	return success;
 	} 
 };
 
